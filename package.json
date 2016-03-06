@@ -1,0 +1,15 @@
+{
+  "name": "countdowner",
+  "version": "0.0.0",
+  "dependencies": {
+  },
+  "scripts": {
+    "test": "./node_modules/.bin/mocha test",
+    "test-watch": "./node_modules/.bin/mocha -w test"
+  },
+  "devDependencies": {
+    "expect": "^1.14.0",
+    "mocha": "^2.4.5",
+    "sinon": "^1.17.3"
+  }
+}
