@@ -33,7 +33,7 @@ describe('Countdowner', function () {
       var date = new Date();
       var cd = new Countdowner(date);
 
-      expect(cd.targetDateMs).toEqual(date.getTime());
+      expect(cd.targetDate.getTime()).toEqual(date.getTime());
     });
 
     it('should increment count of instances', function () {
@@ -99,12 +99,18 @@ describe('Countdowner', function () {
   });
 
   describe('#tick', function () {
+    var stubMethods = function(obj) {
+      sinon.stub(obj, 'getCountdownMessage');
+      sinon.stub(obj, 'decomposeMiliseconds');
+      sinon.stub(obj, 'display');      
+    }
+
     beforeEach(function () {
       this.targetDate = new Date(1000 * 25);
+      
       this.cd = new Countdowner(this.targetDate); 
-      sinon.stub(this.cd, 'getCountdownMessage');
-      sinon.stub(this.cd, 'decomposeMiliseconds');
-      sinon.stub(this.cd, 'display');
+      stubMethods(this.cd);
+      
       this.clock = sinon.useFakeTimers();
     });
 
@@ -129,8 +135,46 @@ describe('Countdowner', function () {
       
       this.cd.tick();
       this.clock.tick(1000 * ticks);
-      
+
       expect(this.cd.decomposeMiliseconds.callCount).toEqual(ticks + 1);
+      expect(this.cd.decomposeMiliseconds.args[2][0]).toEqual((ticks - 2) * 1000);
+      expect(this.cd.decomposeMiliseconds.lastCall.args[0]).toEqual(0)
+    });
+
+    it('should fix difference over daylight saving time', function () {
+      var diff, targetDate, todayDate;
+      targetDate = new Date(2016, 3, 2, 10, 0, 0);
+      todayDate = new Date(2016, 2, 6, 22, 0, 0);
+      
+      this.cd = new Countdowner(targetDate);
+      stubMethods(this.cd);
+
+      this.clock.tick(todayDate.getTime());
+      this.cd.tick();
+      
+      expect(this.cd.decomposeMiliseconds.callCount).toEqual(1);
+      diff = this.cd.decomposeMiliseconds.lastCall.args[0]
+      this.cd.decomposeMiliseconds.restore()
+      sinon.spy(this.cd, 'decomposeMiliseconds');
+      expect(this.cd.decomposeMiliseconds(diff).hours).toEqual(12);
+    });
+
+    it('should not fix difference for no daylight saving time', function () {
+      var diff, targetDate, todayDate;
+      targetDate = new Date(2016, 2, 26, 11, 0, 0);
+      todayDate = new Date(2016, 2, 6, 22, 0, 0);
+      
+      this.cd = new Countdowner(targetDate);
+      stubMethods(this.cd);
+
+      this.clock.tick(todayDate.getTime());
+      this.cd.tick();
+      
+      expect(this.cd.decomposeMiliseconds.callCount).toEqual(1);
+      diff = this.cd.decomposeMiliseconds.lastCall.args[0]
+      this.cd.decomposeMiliseconds.restore()
+      sinon.spy(this.cd, 'decomposeMiliseconds');
+      expect(this.cd.decomposeMiliseconds(diff).hours).toEqual(13);
     });
   });
 

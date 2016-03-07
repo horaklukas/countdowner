@@ -6,25 +6,39 @@
   <script type="text/javascript" src="../src/countdowner.js"></script>
 </head>
 <body>
-<script type="text/javascript">
-  var targetDateMs; 
 
-  // five seconds count down
-  targetDateMs = Date.now() + (1000 * 5);
-  new Countdowner(new Date(targetDateMs)).create();
+  <p>
+    Do Vodáckého sjezdu Chrudimky 2016 zbývá <span id="chrudimka"></span>
+  </p>
+  <p>
+    Do Odemykání Doubravy 2016 zbývá <span id="doubrava"></span>
+  </p>
 
-  // five minutes and thirty seconds co
-  targetDateMs = Date.now() + (1000 * 60 * 5) + (1000 * 30);
-  new Countdowner(new Date(targetDateMs)).create();
+  <script type="text/javascript">
+    var targetDateMs; 
 
-  // 3 hours and 25 minutes count down
-  targetDateMs = Date.now() + (1000 * 60 * 60 * 3) + (1000 * 60 * 25);
-  new Countdowner(new Date(targetDateMs)).create();
+    // five seconds count down
+    targetDateMs = Date.now() + (1000 * 5);
+    new Countdowner(new Date(targetDateMs)).create();
 
-  // 6 days 3 hours and 25 minutes count down
-  targetDateMs = Date.now() + (1000 * 60 * 60 * 24 * 6) + (1000 * 60 * 60 * 3) + 
-    (1000 * 60 * 25);
-  new Countdowner(new Date(targetDateMs)).create();
+    // five minutes and thirty seconds co
+    targetDateMs = Date.now() + (1000 * 60 * 5) + (1000 * 30);
+    new Countdowner(new Date(targetDateMs)).create();
+
+    // 3 hours and 25 minutes count down
+    targetDateMs = Date.now() + (1000 * 60 * 60 * 3) + (1000 * 60 * 25);
+    new Countdowner(new Date(targetDateMs)).create();
+
+    // 6 days 3 hours and 25 minutes count down
+    targetDateMs = Date.now() + (1000 * 60 * 60 * 24 * 6) + (1000 * 60 * 60 * 3) + 
+      (1000 * 60 * 25);
+    new Countdowner(new Date(targetDateMs)).create();
+
+    new Countdowner(new Date(2016, 2, 26, 11, 0, 0))
+      .create(document.getElementById('chrudimka'));
+
+    new Countdowner(new Date(2016, 3, 2, 10, 0, 0))
+      .create(document.getElementById('doubrava'));
 </script>
 </body>
 </html>

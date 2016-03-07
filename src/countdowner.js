@@ -48,7 +48,7 @@ var Countdowner = function(targetDate) {
   Countdowner.index++;
 
   this.ID = 'cd' + Countdowner.index.toString();
-  this.targetDateMs = targetDate.getTime();
+  this.targetDate = targetDate;
   this.timer = null;
 };
 
@@ -100,9 +100,17 @@ Countdowner.prototype.create = function(placeholder) {
 };
 
 Countdowner.prototype.tick = function () {
-  var message, timeDiff, decomposedMiliseconds;
+  var now, utcNowMs, utcTargetDateMs, timeDiff, message, td;
   
-  timeDiff = this.targetDateMs - Date.now();
+  now = new Date;
+  utcNowMs = Date.UTC(now.getFullYear(), now.getMonth() + 1, now.getDate(), 
+    now.getHours(), now.getMinutes(), now.getSeconds());
+
+  td = this.targetDate;
+  utcTargetDateMs = Date.UTC(td.getFullYear(), td.getMonth() + 1, td.getDate(), 
+    td.getHours(), td.getMinutes(), td.getSeconds()) ;
+
+  timeDiff = utcTargetDateMs - utcNowMs
 
   if(timeDiff < 0) {
     message = 'Událost již nastala';
