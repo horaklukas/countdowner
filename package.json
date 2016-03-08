@@ -2,6 +2,7 @@
   "name": "countdowner",
   "version": "0.0.0",
   "dependencies": {
+    "function-bind": "^1.1.0"
   },
   "scripts": {
     "test": "./node_modules/.bin/mocha test",
@@ -9,7 +10,9 @@
   },
   "devDependencies": {
     "expect": "^1.14.0",
-    "mocha": "^2.4.5",
+    "jsdom": "3.1.2",
+    "jsdom-global": "^1.6.2",
+    "mocha": "~2.3.4",
     "sinon": "^1.17.3"
   }
 }

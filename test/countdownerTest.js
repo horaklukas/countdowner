@@ -1,5 +1,4 @@
-var expect = require('expect');
-var sinon = require('sinon');
+require('./setup');
 
 describe('Countdowner', function () {
   var Countdowner;
@@ -95,6 +94,25 @@ describe('Countdowner', function () {
       var decomposed = this.cd.decomposeMiliseconds(ms);
 
       expect(decomposed.seconds).toEqual(2);
+    });
+  });
+
+
+  describe('#create', function () {
+    beforeEach(function () {
+      this.cd = new Countdowner(new Date);
+      sinon.stub(this.cd, 'tick');
+    });
+
+    afterEach(function () {
+      this.cd.tick.restore();
+      delete this.cd;
+    });
+
+    it('should create new placeholder if none supplied', function () {
+      this.cd.create();
+
+      expect(document.getElementById('cd' + Countdowner.index)).toExist();
     });
   });
 
