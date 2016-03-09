@@ -16,6 +16,11 @@
 
   <script type="text/javascript">
     var targetDateMs;
+    var el;
+
+    el = function(id) {
+      return document.getElementById(id);
+    }
 
     // five seconds count down
     targetDateMs = Date.now() + (1000 * 5);
@@ -35,10 +40,10 @@
     new Countdowner(new Date(targetDateMs)).render();
 
     new Countdowner(new Date(2016, 2, 26, 11, 0, 0))
-      .render(document.getElementById('chrudimka'));
+      .render(el('chrudimka'), {color: '#efefef',  backgroundColor: 'brown'});
 
     new Countdowner(new Date(2016, 3, 2, 10, 0, 0))
-      .render(document.getElementById('doubrava'));
+      .render(el('doubrava'), {color: 'white', 'background-color': 'green'});
 </script>
 </body>
 </html>

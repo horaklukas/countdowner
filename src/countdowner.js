@@ -26,35 +26,12 @@ Countdowner.MS_IN_MIN = Countdowner.MS_IN_SEC * 60;
 Countdowner.MS_IN_HOUR = Countdowner.MS_IN_MIN * 60;
 Countdowner.MS_IN_DAY = Countdowner.MS_IN_HOUR * 24;
 
-/**
- * @param {number} miliseconds
- */
-Countdowner.prototype._decomposeMiliseconds = function(miliseconds) {
-  var days, hours, minutes, seconds, rest;
-
-  days = Math.floor(miliseconds / Countdowner.MS_IN_DAY);
-  rest = miliseconds % Countdowner.MS_IN_DAY;
-
-  hours = Math.floor(rest / Countdowner.MS_IN_HOUR)
-  rest = rest % Countdowner.MS_IN_HOUR;
-
-  minutes = Math.floor(rest / Countdowner.MS_IN_MIN)
-  rest = rest % Countdowner.MS_IN_MIN;
-
-  seconds = Math.floor(rest / Countdowner.MS_IN_SEC)
-
-  return {
-    days: days,
-    hours: hours,
-    minutes: minutes,
-    seconds: seconds
-  }
-};
 
 /**
  * @param {?HTMLElement} placeholder
+ * @param {?Object.<string, *>} styles
  */
-Countdowner.prototype.render = function(placeholder) {
+Countdowner.prototype.render = function(placeholder, styles) {
   if(!placeholder) {
     placeholder = document.createElement('div');
     document.body.appendChild(placeholder);
@@ -66,7 +43,23 @@ Countdowner.prototype.render = function(placeholder) {
     placeholder.id = this.ID;
   }
 
+  if(styles != null) {
+    this._stylePlaceholder(placeholder, styles);
+  }
+
   this._tick();
+};
+
+/**
+ * @param {HTMLElement} placeholder
+ * @param {Object.<string, *>} styles
+ */
+Countdowner.prototype._stylePlaceholder = function (placeholder, styles) {
+  var prop;
+
+  for (prop in styles) {
+    placeholder.style[prop] = styles[prop];
+  }
 };
 
 Countdowner.prototype._tick = function () {
@@ -93,16 +86,41 @@ Countdowner.prototype._tick = function () {
   this._display(message);
 }
 
-Countdowner.prototype._display = function(text) {
-    document.getElementById(this.ID).innerHTML = text;
-};
-
 /**
  * @param {Object.<string, number>} remainingTime
  */
 Countdowner.prototype._getCountdownMessage = function(remainingTime) {
   return remainingTime.days + ' dnů ' + remainingTime.hours + ' hodin ' +
     remainingTime.minutes + ' minut a ' + remainingTime.seconds + ' vteřin';
+};
+
+/**
+ * @param {number} miliseconds
+ */
+Countdowner.prototype._decomposeMiliseconds = function(miliseconds) {
+  var days, hours, minutes, seconds, rest;
+
+  days = Math.floor(miliseconds / Countdowner.MS_IN_DAY);
+  rest = miliseconds % Countdowner.MS_IN_DAY;
+
+  hours = Math.floor(rest / Countdowner.MS_IN_HOUR)
+  rest = rest % Countdowner.MS_IN_HOUR;
+
+  minutes = Math.floor(rest / Countdowner.MS_IN_MIN)
+  rest = rest % Countdowner.MS_IN_MIN;
+
+  seconds = Math.floor(rest / Countdowner.MS_IN_SEC)
+
+  return {
+    days: days,
+    hours: hours,
+    minutes: minutes,
+    seconds: seconds
+  }
+};
+
+Countdowner.prototype._display = function(text) {
+    document.getElementById(this.ID).innerHTML = text;
 };
 
 if(typeof module !== "undefined" && module !== null) {
