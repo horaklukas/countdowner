@@ -1,2 +1,2 @@
-# countdowner
-Countdown timer
+# Countdowner
+Simple Javascript countdown timer

@@ -29,7 +29,7 @@ Countdowner.MS_IN_DAY = Countdowner.MS_IN_HOUR * 24;
 /**
  * @param {number} miliseconds
  */
-Countdowner.prototype.decomposeMiliseconds = function(miliseconds) {
+Countdowner.prototype._decomposeMiliseconds = function(miliseconds) {
   var days, hours, minutes, seconds, rest;
 
   days = Math.floor(miliseconds / Countdowner.MS_IN_DAY);
@@ -54,26 +54,30 @@ Countdowner.prototype.decomposeMiliseconds = function(miliseconds) {
 /**
  * @param {?HTMLElement} placeholder
  */
-Countdowner.prototype.create = function(placeholder) {
+Countdowner.prototype.render = function(placeholder) {
   if(!placeholder) {
     placeholder = document.createElement('div');
     document.body.appendChild(placeholder);
   }
 
-  // @TODO - if already has id, save it insteaad of create new
-  placeholder.id = this.ID;
-  this.tick();
+  if(placeholder.id) {
+    this.ID = placeholder.id;
+  } else {
+    placeholder.id = this.ID;
+  }
+
+  this._tick();
 };
 
-Countdowner.prototype.tick = function () {
+Countdowner.prototype._tick = function () {
   var now, utcNowMs, utcTargetDateMs, timeDiff, message, td;
-  
+
   now = new Date;
-  utcNowMs = Date.UTC(now.getFullYear(), now.getMonth() + 1, now.getDate(), 
+  utcNowMs = Date.UTC(now.getFullYear(), now.getMonth() + 1, now.getDate(),
     now.getHours(), now.getMinutes(), now.getSeconds());
 
   td = this.targetDate;
-  utcTargetDateMs = Date.UTC(td.getFullYear(), td.getMonth() + 1, td.getDate(), 
+  utcTargetDateMs = Date.UTC(td.getFullYear(), td.getMonth() + 1, td.getDate(),
     td.getHours(), td.getMinutes(), td.getSeconds()) ;
 
   timeDiff = utcTargetDateMs - utcNowMs
@@ -82,21 +86,21 @@ Countdowner.prototype.tick = function () {
     message = 'Událost již nastala';
     this.timer = null;
   } else {
-    message = this.getCountdownMessage(this.decomposeMiliseconds(timeDiff));
-    this.timer = setTimeout(this.tick.bind(this), Countdowner.MS_IN_SEC);
+    message = this._getCountdownMessage(this._decomposeMiliseconds(timeDiff));
+    this.timer = setTimeout(this._tick.bind(this), Countdowner.MS_IN_SEC);
   }
 
-  this.display(message);
+  this._display(message);
 }
 
-Countdowner.prototype.display = function(text) {
+Countdowner.prototype._display = function(text) {
     document.getElementById(this.ID).innerHTML = text;
 };
 
 /**
  * @param {Object.<string, number>} remainingTime
  */
-Countdowner.prototype.getCountdownMessage = function(remainingTime) {
+Countdowner.prototype._getCountdownMessage = function(remainingTime) {
   return remainingTime.days + ' dnů ' + remainingTime.hours + ' hodin ' +
     remainingTime.minutes + ' minut a ' + remainingTime.seconds + ' vteřin';
 };

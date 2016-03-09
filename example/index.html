@@ -15,30 +15,30 @@
   </p>
 
   <script type="text/javascript">
-    var targetDateMs; 
+    var targetDateMs;
 
     // five seconds count down
     targetDateMs = Date.now() + (1000 * 5);
-    new Countdowner(new Date(targetDateMs)).create();
+    new Countdowner(new Date(targetDateMs)).render();
 
     // five minutes and thirty seconds co
     targetDateMs = Date.now() + (1000 * 60 * 5) + (1000 * 30);
-    new Countdowner(new Date(targetDateMs)).create();
+    new Countdowner(new Date(targetDateMs)).render();
 
     // 3 hours and 25 minutes count down
     targetDateMs = Date.now() + (1000 * 60 * 60 * 3) + (1000 * 60 * 25);
-    new Countdowner(new Date(targetDateMs)).create();
+    new Countdowner(new Date(targetDateMs)).render();
 
     // 6 days 3 hours and 25 minutes count down
-    targetDateMs = Date.now() + (1000 * 60 * 60 * 24 * 6) + (1000 * 60 * 60 * 3) + 
+    targetDateMs = Date.now() + (1000 * 60 * 60 * 24 * 6) + (1000 * 60 * 60 * 3) +
       (1000 * 60 * 25);
-    new Countdowner(new Date(targetDateMs)).create();
+    new Countdowner(new Date(targetDateMs)).render();
 
     new Countdowner(new Date(2016, 2, 26, 11, 0, 0))
-      .create(document.getElementById('chrudimka'));
+      .render(document.getElementById('chrudimka'));
 
     new Countdowner(new Date(2016, 3, 2, 10, 0, 0))
-      .create(document.getElementById('doubrava'));
+      .render(document.getElementById('doubrava'));
 </script>
 </body>
 </html>
