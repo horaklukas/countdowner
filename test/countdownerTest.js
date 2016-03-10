@@ -1,5 +1,3 @@
-require('./setup');
-
 describe('Countdowner', function () {
   var Countdowner, element;
 
@@ -20,34 +18,34 @@ describe('Countdowner', function () {
   });
 
   it('should have zero count of countdowners on start', function () {
-    expect(Countdowner.index).toEqual(0);
+    expect(Countdowner.index).to.equal(0);
   });
 
   describe('#constructor', function () {
     it('should throw when date not supplied to constructor', function () {
       expect(function() {
         new Countdowner(new Object())
-      }).toThrow('Only Date object is accepted as a constructor parameter');
+      }).to.throw('Only Date object is accepted as a constructor parameter');
     });
 
     it('should not throw when date supplied to constructor', function () {
       expect(function() {
         new Countdowner(new Date())
-      }).toNotThrow();
+      }).to.not.throw();
     });
 
     it('should store miliseconds of date supplied to instance', function () {
       var date = new Date();
       var cd = new Countdowner(date);
 
-      expect(cd.targetDate.getTime()).toEqual(date.getTime());
+      expect(cd.targetDate.getTime()).to.equal(date.getTime());
     });
 
     it('should increment count of instances', function () {
       new Countdowner(new Date);
       new Countdowner(new Date);
 
-      expect(Countdowner.index).toEqual(2);
+      expect(Countdowner.index).to.equal(2);
     });
 
     it('should create ID of related element', function() {
@@ -55,9 +53,9 @@ describe('Countdowner', function () {
       cd2 = new Countdowner(new Date);
       cd3 = new Countdowner(new Date);
 
-      expect(cd1.ID).toEqual('cd1');
-      expect(cd2.ID).toEqual('cd2');
-      expect(cd3.ID).toEqual('cd3');
+      expect(cd1.ID).to.equal('cd1');
+      expect(cd2.ID).to.equal('cd2');
+      expect(cd3.ID).to.equal('cd3');
     });
   });
 
@@ -81,7 +79,7 @@ describe('Countdowner', function () {
       this.cd.render();
 
       element = document.getElementById('cd' + Countdowner.index);
-      expect(element).toExist();
+      expect(element).to.exist;
     });
 
     it('should not create new placeholder if supplied', function () {
@@ -89,7 +87,7 @@ describe('Countdowner', function () {
 
       this.cd.render(element);
 
-      expect(document.getElementById('cd' + Countdowner.index)).toNotExist();
+      expect(document.getElementById('cd' + Countdowner.index)).to.not.exist;
     });
 
     it('should preserve and keep supplied placeholder id', function () {
@@ -98,8 +96,8 @@ describe('Countdowner', function () {
 
       this.cd.render(element);
 
-      expect(document.getElementById(id)).toExist();
-      expect(this.cd.ID).toEqual(id);
+      expect(document.getElementById(id)).to.exist;
+      expect(this.cd.ID).to.equal(id);
     });
 
     it('should add generated id to placeholder if it doesnt has it', function () {
@@ -108,8 +106,8 @@ describe('Countdowner', function () {
 
       this.cd.render(element);
 
-      expect(document.getElementById(id)).toExist();
-      expect(this.cd.ID).toEqual(id);
+      expect(document.getElementById(id)).to.exist;
+      expect(this.cd.ID).to.equal(id);
     });
 
     it('should style placeholder when styles supplied', function () {
@@ -117,15 +115,15 @@ describe('Countdowner', function () {
 
       this.cd.render(element, {color: 'red'});
 
-      expect(this.cd._stylePlaceholder.callCount).toEqual(1);
-      expect(this.cd._stylePlaceholder.args[0][0]).toExist();
-      expect(this.cd._stylePlaceholder.args[0][1]).toEqual({color: 'red'});
+      expect(this.cd._stylePlaceholder.callCount).to.equal(1);
+      expect(this.cd._stylePlaceholder.args[0][0]).to.exist;
+      expect(this.cd._stylePlaceholder.args[0][1]).to.eql({color: 'red'});
     })
 
     it('should not style placeholder when styles not supplied', function () {
       element = createPlaceholderElement(null);
 
-      expect(this.cd._stylePlaceholder.callCount).toEqual(0);
+      expect(this.cd._stylePlaceholder.callCount).to.equal(0);
     })
   });
 
@@ -147,8 +145,8 @@ describe('Countdowner', function () {
 
       this.cd._stylePlaceholder(element, styles)
 
-      expect(element.style.color).toEqual(styles.color);
-      expect(element.style.opacity).toEqual(styles.opacity.toString());
+      expect(element.style.color).to.equal(styles.color);
+      expect(element.style.opacity).to.equal(styles.opacity.toString());
     });
 
     it('should be able to set double world style propeperty', function () {
@@ -160,9 +158,9 @@ describe('Countdowner', function () {
 
       this.cd._stylePlaceholder(element, styles)
 
-      expect(element.style.backgroundColor).toEqual(styles['background-color']);
-      expect(element.style.fontSize).toEqual(styles['font-size']);
-      expect(element.style.fontWeight).toEqual(styles['font-weight']);
+      expect(element.style.backgroundColor).to.equal(styles['background-color']);
+      expect(element.style.fontSize).to.equal(styles['font-size']);
+      expect(element.style.fontWeight).to.equal(styles['font-weight']);
     });
   });
 
@@ -194,7 +192,7 @@ describe('Countdowner', function () {
 
       this.cd._tick();
 
-      expect(this.cd._display.calledOnce).toEqual(true);
+      expect(this.cd._display.calledOnce).to.equal(true);
     });
 
     it('should decompose remaining miliseconds each second', function () {
@@ -204,9 +202,9 @@ describe('Countdowner', function () {
       this.cd._tick();
       this.clock.tick(1000 * ticks);
 
-      expect(this.cd._decomposeMiliseconds.callCount).toEqual(ticks + 1);
-      expect(this.cd._decomposeMiliseconds.args[2][0]).toEqual((ticks - 2) * 1000);
-      expect(this.cd._decomposeMiliseconds.lastCall.args[0]).toEqual(0)
+      expect(this.cd._decomposeMiliseconds.callCount).to.equal(ticks + 1);
+      expect(this.cd._decomposeMiliseconds.args[2][0]).to.equal((ticks - 2) * 1000);
+      expect(this.cd._decomposeMiliseconds.lastCall.args[0]).to.equal(0)
     });
 
     it('should fix difference over daylight saving time', function () {
@@ -220,11 +218,11 @@ describe('Countdowner', function () {
       this.clock.tick(todayDate.getTime());
       this.cd._tick();
 
-      expect(this.cd._decomposeMiliseconds.callCount).toEqual(1);
+      expect(this.cd._decomposeMiliseconds.callCount).to.equal(1);
       diff = this.cd._decomposeMiliseconds.lastCall.args[0]
       this.cd._decomposeMiliseconds.restore()
       sinon.spy(this.cd, '_decomposeMiliseconds');
-      expect(this.cd._decomposeMiliseconds(diff).hours).toEqual(12);
+      expect(this.cd._decomposeMiliseconds(diff).hours).to.equal(12);
     });
 
     it('should not fix difference for no daylight saving time', function () {
@@ -238,11 +236,11 @@ describe('Countdowner', function () {
       this.clock.tick(todayDate.getTime());
       this.cd._tick();
 
-      expect(this.cd._decomposeMiliseconds.callCount).toEqual(1);
+      expect(this.cd._decomposeMiliseconds.callCount).to.equal(1);
       diff = this.cd._decomposeMiliseconds.lastCall.args[0]
       this.cd._decomposeMiliseconds.restore()
       sinon.spy(this.cd, '_decomposeMiliseconds');
-      expect(this.cd._decomposeMiliseconds(diff).hours).toEqual(13);
+      expect(this.cd._decomposeMiliseconds(diff).hours).to.equal(13);
     });
   });
 
@@ -261,7 +259,7 @@ describe('Countdowner', function () {
         (1000 * 60 * 28) + (1000 * 2);
       var decomposed = this.cd._decomposeMiliseconds(ms);
 
-      expect(decomposed.days).toEqual(14);
+      expect(decomposed.days).to.equal(14);
     });
 
     it('should extract correct count of hours', function () {
@@ -270,7 +268,7 @@ describe('Countdowner', function () {
         (1000 * 60 * 52) + (1000 * 50);
       var decomposed = this.cd._decomposeMiliseconds(ms);
 
-      expect(decomposed.hours).toEqual(22);
+      expect(decomposed.hours).to.equal(22);
     });
 
     it('should extract correct count of minutes', function () {
@@ -278,7 +276,7 @@ describe('Countdowner', function () {
       var ms = (1000 * 60 * 60 * 18) + (1000 * 60 * 31) + (1000 * 5);
       var decomposed = this.cd._decomposeMiliseconds(ms);
 
-      expect(decomposed.minutes).toEqual(31);
+      expect(decomposed.minutes).to.equal(31);
     });
 
     it('should extract correct count of seconds', function () {
@@ -286,7 +284,7 @@ describe('Countdowner', function () {
       var ms = (1000 * 60 * 3) + (1000 * 2);
       var decomposed = this.cd._decomposeMiliseconds(ms);
 
-      expect(decomposed.seconds).toEqual(2);
+      expect(decomposed.seconds).to.equal(2);
     });
   });
 
