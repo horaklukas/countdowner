@@ -1,6 +1,4 @@
-if(typeof require !== "undefined" && require !== null) {
-  Function.prototype.bind = require('function-bind')
-}
+Function.prototype.bind = require('function-bind')
 
 /**
  * @param {Date} targetDate
@@ -123,6 +121,4 @@ Countdowner.prototype._display = function(text) {
     document.getElementById(this.ID).innerHTML = text;
 };
 
-if(typeof module !== "undefined" && module !== null) {
-  module.exports = Countdowner;
-}
+module.exports = Countdowner;
