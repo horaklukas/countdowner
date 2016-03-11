@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Countdowner use example</title>
+  <script type="text/javascript" src="../dist/countdowner.min.js"></script>
+</head>
+<body>
+
+  <p>
+    Do Vodáckého sjezdu Chrudimky 2016 zbývá <span id="chrudimka"></span>
+  </p>
+  <p>
+    Do Odemykání Doubravy 2016 zbývá <span id="doubrava"></span>
+  </p>
+
+  <script type="text/javascript">
+    var targetDateMs;
+    var el;
+
+    el = function(id) {
+      return document.getElementById(id);
+    }
+
+    // five seconds count down
+    targetDateMs = Date.now() + (1000 * 5);
+    new Countdowner(new Date(targetDateMs)).render();
+
+    // five minutes and thirty seconds co
+    targetDateMs = Date.now() + (1000 * 60 * 5) + (1000 * 30);
+    new Countdowner(new Date(targetDateMs)).render();
+
+    // 3 hours and 25 minutes count down
+    targetDateMs = Date.now() + (1000 * 60 * 60 * 3) + (1000 * 60 * 25);
+    new Countdowner(new Date(targetDateMs)).render();
+
+    // 6 days 3 hours and 25 minutes count down
+    targetDateMs = Date.now() + (1000 * 60 * 60 * 24 * 6) + (1000 * 60 * 60 * 3) +
+      (1000 * 60 * 25);
+    new Countdowner(new Date(targetDateMs)).render();
+
+    new Countdowner(new Date(2016, 2, 26, 11, 0, 0))
+      .render(el('chrudimka'), {color: '#efefef',  backgroundColor: 'brown'});
+
+    new Countdowner(new Date(2016, 3, 2, 10, 0, 0))
+      .render(el('doubrava'), {color: 'white', 'background-color': 'green'});
+</script>
+</body>
+</html>
