@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/horaklukas/countdowner.svg?branch=master)](https://travis-ci.org/horaklukas/countdowner)
+
 Countdowner
 ============
 Simple Javascript countdown timer
