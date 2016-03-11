@@ -5,8 +5,8 @@
     "function-bind": "^1.1.0"
   },
   "scripts": {
-    "test": "./node_modules/.bin/mocha test",
-    "test-watch": "./node_modules/.bin/mocha -w test"
+    "test": "./node_modules/.bin/karma start --single-run",
+    "test-watch": "./node_modules/.bin/karma start --auto-watch"
   },
   "devDependencies": {
     "chai": "^3.5.0",

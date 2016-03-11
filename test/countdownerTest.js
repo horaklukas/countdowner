@@ -13,15 +13,15 @@ describe('Countdowner', function () {
     Countdowner = require('../src/countdowner');
   });
 
-  beforeEach(function () {
-    Countdowner.index = 0;
-  });
-
   it('should have zero count of countdowners on start', function () {
     expect(Countdowner.index).to.equal(0);
   });
 
   describe('#constructor', function () {
+    beforeEach(function () {
+      Countdowner.index = 0;
+    });
+
     it('should throw when date not supplied to constructor', function () {
       expect(function() {
         new Countdowner(new Object())
